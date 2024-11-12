@@ -16,6 +16,7 @@ services:
       dockerfile: ./php-fpm/Dockerfile
     volumes:
       - ./:/var/www/html
+      - ./php-fpm/docker-user.ini:/usr/local/etc/php/conf.d/docker-user.ini
     depends_on:
       - postgres
       - composer
