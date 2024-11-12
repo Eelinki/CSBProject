@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace CSB\Index;
+namespace App\Index;
 
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;

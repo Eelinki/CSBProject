@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use CSB\Index\Index;
+use App\Index\Index;
 
 require '../vendor/autoload.php';
 
