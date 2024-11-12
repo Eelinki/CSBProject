@@ -22,6 +22,7 @@ services:
 
   composer:
     image: composer
+    command: bash -c "composer install --ignore-platform-reqs"
     volumes:
       - ./:/app
 
