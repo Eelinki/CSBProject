@@ -1,0 +1,13 @@
+{
+  "name": "eelinki/csbproject",
+  "description": "Course project for Cyber Security Base 2024",
+  "require": {
+    "php": ">=8.3",
+    "ext-pdo": "*",
+    "ext-dom": "*",
+    "ext-mbstring": "*",
+    "ext-json": "*",
+    "ext-pdo_pgsql": "*",
+    "nikic/fast-route": ">=1.3.0"
+  }
+}
