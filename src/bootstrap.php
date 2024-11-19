@@ -7,9 +7,11 @@ use App\User\Api\Login as LoginApi;
 use App\User\Api\Register as RegisterApi;
 use App\User\Login;
 use App\User\Register;
+use Laminas\Diactoros\ResponseFactory;
 use League\Route\Http\Exception\BadRequestException;
 use League\Route\Http\Exception\MethodNotAllowedException;
 use League\Route\Http\Exception\NotFoundException;
+use League\Route\Strategy\JsonStrategy;
 
 require '../vendor/autoload.php';
 
@@ -25,7 +27,7 @@ $router->map('GET', '/register', new Register());
 $router->group('/api', function ($group) {
     $group->map('POST', '/login', new LoginApi());
     $group->map('POST', '/register', new RegisterApi());
-});
+})->setStrategy(new JsonStrategy(new ResponseFactory()));
 
 try {
     $response = $router->dispatch($request);

@@ -5,11 +5,11 @@ namespace App\Template;
 
 use App\View;
 
-final class DefaultTemplate implements View
+final readonly class DefaultTemplate implements View
 {
     public function __construct(
-        private readonly string $title,
-        private readonly View $view
+        private string $title,
+        private View $view
     ) {
     }
 
