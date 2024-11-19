@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Template;
 
 use App\View;
 
-final class FrontPageView implements View
+final class FrontPage implements View
 {
 
     public function render(): string
@@ -15,8 +16,8 @@ final class FrontPageView implements View
             <h1>Super secure hosting</h1>
             <h2>Your files are safe with us!</h2>
             <div class="buttons">
-                <a class="button alt" href="#">Get started</a>
-                <a class="button" href="#">Log in</a>
+                <a class="button alt" href="/register">Get started</a>
+                <a class="button" href="/login">Log in</a>
             </div>
         </div>
         <?php

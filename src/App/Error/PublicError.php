@@ -1,25 +1,30 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Index;
+namespace App\Error;
 
 use App\Template\DefaultTemplate;
-use App\Template\FrontPage as FrontPageView;
+use App\Template\Error;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-final class FrontPage implements RequestHandlerInterface
+final readonly class PublicError implements RequestHandlerInterface
 {
+    public function __construct(
+        private int $code,
+        private string $phrase
+    ) {
+    }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new HtmlResponse(
+        return (new HtmlResponse(
             (new DefaultTemplate(
-                'Super secure hosting',
-                new FrontPageView())
+                $this->phrase,
+                new Error($this->code, $this->phrase))
             )->render()
-        );
+        ))->withStatus($this->code, $this->phrase);
     }
 }
