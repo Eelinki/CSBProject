@@ -35,12 +35,12 @@ final readonly class User
     /**
      * @throws BadRequestException
      */
-    public function getUserByUsername(string $username): UserModel
+    public function getUserByLogin(string $username, string $passwordHash): UserModel
     {
-        $q = $this->db->query('SELECT * FROM user_account WHERE username = \'' . $username . '\'');
+        $q = $this->db->query("SELECT * FROM user_account WHERE username = '" . $username . "' AND password = '" . $passwordHash . "'");
 
         if ($q->rowCount() === 0) {
-            throw new BadRequestException('User not found');
+            throw new BadRequestException('Wrong username or password!');
         }
 
         $row = $q->fetchObject();
