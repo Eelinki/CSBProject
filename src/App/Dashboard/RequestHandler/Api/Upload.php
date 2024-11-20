@@ -52,8 +52,6 @@ final readonly class Upload implements RequestHandlerInterface
 
         $targetPath = $config->basePath() . '/uploads/' . $fileId . '.' . $fileType;
 
-        var_dump($config->basePath());
-        var_dump($targetPath);
         if (!is_dir($config->basePath() . '/uploads')) {
             mkdir($config->basePath() . '/uploads');
         }
