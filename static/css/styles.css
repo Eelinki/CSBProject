@@ -148,3 +148,29 @@ button, input[type="button"], input[type="submit"], a.button {
         }
     }
 }
+
+.toast-root {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 32px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 16px;
+
+    .toast {
+        padding: 16px;
+        border-radius: 4px;
+        color: #ffffff;
+
+        &.error {
+            background: rgba(100, 0, 0, 0.8);
+            border: 1px solid rgba(200, 0, 0, 0.8);
+        }
+
+        &.success {
+            background: rgba(0, 100, 0, 0.8);
+            border: 1px solid rgba(0, 200, 0, 0.8);
+        }
+    }
+}

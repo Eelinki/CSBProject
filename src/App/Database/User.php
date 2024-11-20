@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Database;
 
+use App\Models\User as UserModel;
+use League\Route\Http\Exception\BadRequestException;
 use PDO;
 
 final readonly class User
@@ -13,7 +15,7 @@ final readonly class User
 
     public function usernameIsFree(string $username): bool
     {
-        $q = $this->db->prepare('SELECT id FROM user_account WHERE username = :username');
+        $q = $this->db->prepare('SELECT * FROM user_account WHERE username = :username');
         $q->bindValue(':username', $username);
         $q->execute();
 
@@ -28,5 +30,26 @@ final readonly class User
         $q->execute();
 
         return (int)$this->db->lastInsertId();
+    }
+
+    /**
+     * @throws BadRequestException
+     */
+    public function getUserByUsername(string $username): UserModel
+    {
+        $q = $this->db->query('SELECT * FROM user_account WHERE username = \'' . $username . '\'');
+
+        if ($q->rowCount() === 0) {
+            throw new BadRequestException('User not found');
+        }
+
+        $row = $q->fetchObject();
+
+        return new UserModel(
+            (int)$row->id,
+            (string)$row->username,
+            (string)$row->password,
+            (boolean)$row->is_admin
+        );
     }
 }

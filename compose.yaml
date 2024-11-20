@@ -29,6 +29,9 @@ services:
 
   postgres:
     image: postgres
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/a.sql
+      - ./sample_data.sql:/docker-entrypoint-initdb.d/b.sql
     ports:
       - 5432:5432
     environment:

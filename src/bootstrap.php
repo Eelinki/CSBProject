@@ -21,12 +21,23 @@ $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
 
 $router = new League\Route\Router;
 
-$router->map('GET', '/', new FrontPage());
+$db = new PDO(
+    'pgsql:host=postgres;dbname=cybersecurity',
+    'cybersecurity',
+    'cybersecurity',
+    [
+        PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
+    ]
+);
+
+$router->map('GET', '/', new FrontPage($db));
 $router->map('GET', '/login', new Login());
 $router->map('GET', '/register', new Register());
-$router->group('/api', function ($group) {
-    $group->map('POST', '/login', new LoginApi());
-    $group->map('POST', '/register', new RegisterApi());
+$router->group('/api', function ($group) use ($db) {
+    $group->map('POST', '/login', new LoginApi($db));
+    $group->map('POST', '/register', new RegisterApi($db));
 })->setStrategy(new JsonStrategy(new ResponseFactory()));
 
 try {

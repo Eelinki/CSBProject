@@ -26,6 +26,8 @@ final readonly class DefaultTemplate implements View
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="/static/css/styles.css">
+
+            <script src="/static/js/bootstrap.js" type="module"></script>
         </head>
         <body>
             <div class="main-nav">

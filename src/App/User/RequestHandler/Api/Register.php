@@ -3,14 +3,19 @@ declare(strict_types=1);
 
 namespace App\User\RequestHandler\Api;
 
-use Laminas\Diactoros\Response\HtmlResponse;
+use App\Database\User;
+use Laminas\Diactoros\Response;
 use League\Route\Http\Exception\BadRequestException;
+use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-final class Register implements RequestHandlerInterface
+final readonly class Register implements RequestHandlerInterface
 {
+    public function __construct(private PDO $db)
+    {
+    }
 
     /**
      * @throws BadRequestException
@@ -21,12 +26,15 @@ final class Register implements RequestHandlerInterface
         $password = $request->getParsedBody()['password'] ?? '';
         $passwordAgain = $request->getParsedBody()['password_again'] ?? '';
 
+        $repo = new User($this->db);
+        if (!$repo->usernameIsFree($username)) {
+            throw new BadRequestException('Username is already registered');
+        }
+
         if ($password !== $passwordAgain) {
             throw new BadRequestException('Passwords do not match');
         }
 
-        ob_start();
-
-        return new HtmlResponse(ob_get_clean());
+        return (new Response())->withHeader('Location', '/');
     }
 }

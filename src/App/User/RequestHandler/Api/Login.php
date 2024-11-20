@@ -3,21 +3,37 @@ declare(strict_types=1);
 
 namespace App\User\RequestHandler\Api;
 
-use Laminas\Diactoros\Response\HtmlResponse;
+use App\Database\User;
+use Laminas\Diactoros\Response;
+use League\Route\Http\Exception\BadRequestException;
+use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-final class Login implements RequestHandlerInterface
+final readonly class Login implements RequestHandlerInterface
 {
+    public function __construct(private PDO $db)
+    {
+    }
 
+    /**
+     * @throws BadRequestException
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $username = trim($request->getParsedBody()['username'] ?? '');
         $password = $request->getParsedBody()['password'] ?? '';
 
-        ob_start();
+        $repo = new User($this->db);
+        $user = $repo->getUserByUsername($username);
 
-        return new HtmlResponse(ob_get_clean());
+        $hashedPassword = md5($password);
+
+        if ($user->passwordHash() !== $hashedPassword) {
+            throw new BadRequestException('Wrong password!');
+        }
+
+        return (new Response())->withHeader('Location', '/');
     }
 }

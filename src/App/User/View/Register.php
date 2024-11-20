@@ -14,7 +14,7 @@ final class Register implements View
         ?>
         <div class="page-login">
             <h1>Register</h1>
-            <form method="post" action="/api/register" class="login">
+            <form method="post" action="/api/register" class="login" data-ajax>
                 <label>
                     <span>Username</span>
                     <input type="text" name="username">
