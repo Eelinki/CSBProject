@@ -1,26 +1,25 @@
 <?php
 declare(strict_types=1);
 
-namespace App\User;
+namespace App\FrontPage\RequestHandler;
 
-use App\Template\DefaultTemplate;
-use App\Template\Login as LoginView;
+use App\View\DefaultTemplate;
+use App\FrontPage\View\FrontPage as FrontPageView;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-final class Login implements RequestHandlerInterface
+final class FrontPage implements RequestHandlerInterface
 {
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse(
             (new DefaultTemplate(
-                'Login',
-                new LoginView())
+                'Super secure hosting',
+                new FrontPageView())
             )->render()
         );
-
     }
 }

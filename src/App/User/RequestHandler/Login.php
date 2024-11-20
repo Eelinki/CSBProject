@@ -1,24 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace App\User;
+namespace App\User\RequestHandler;
 
-use App\Template\DefaultTemplate;
-use App\Template\Register as RegisterView;
+use App\User\View\Login as LoginView;
+use App\View\DefaultTemplate;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-final class Register implements RequestHandlerInterface
+final class Login implements RequestHandlerInterface
 {
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse(
             (new DefaultTemplate(
-                'Register',
-                new RegisterView())
+                'Login',
+                new LoginView())
             )->render()
         );
 

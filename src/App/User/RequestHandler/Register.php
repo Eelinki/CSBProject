@@ -1,25 +1,26 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Index;
+namespace App\User\RequestHandler;
 
-use App\Template\DefaultTemplate;
-use App\Template\FrontPage as FrontPageView;
+use App\User\View\Register as RegisterView;
+use App\View\DefaultTemplate;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-final class FrontPage implements RequestHandlerInterface
+final class Register implements RequestHandlerInterface
 {
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse(
             (new DefaultTemplate(
-                'Super secure hosting',
-                new FrontPageView())
+                'Register',
+                new RegisterView())
             )->render()
         );
+
     }
 }

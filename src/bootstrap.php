@@ -2,11 +2,11 @@
 declare(strict_types=1);
 
 use App\Error\PublicError;
-use App\Index\FrontPage;
-use App\User\Api\Login as LoginApi;
-use App\User\Api\Register as RegisterApi;
-use App\User\Login;
-use App\User\Register;
+use App\FrontPage\RequestHandler\FrontPage;
+use App\User\RequestHandler\Api\Login as LoginApi;
+use App\User\RequestHandler\Api\Register as RegisterApi;
+use App\User\RequestHandler\Login;
+use App\User\RequestHandler\Register;
 use Laminas\Diactoros\ResponseFactory;
 use League\Route\Http\Exception\BadRequestException;
 use League\Route\Http\Exception\MethodNotAllowedException;

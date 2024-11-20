@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Template;
+namespace App\User\View;
 
-use App\View;
+use App\View\View;
 
 final class Register implements View
 {

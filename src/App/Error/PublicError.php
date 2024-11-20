@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Error;
 
-use App\Template\DefaultTemplate;
-use App\Template\Error;
+use App\View\DefaultTemplate;
+use App\View\Error;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
