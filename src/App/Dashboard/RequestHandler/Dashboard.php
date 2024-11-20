@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Dashboard\RequestHandler;
 
 use App\Dashboard\View\Dashboard as DashboardView;
+use App\Database\File;
 use App\Database\User;
 use App\View\DefaultTemplate;
 use Laminas\Diactoros\Response;
@@ -30,11 +31,12 @@ final readonly class Dashboard implements RequestHandlerInterface
         }
 
         $user = (new User($this->db))->getUserById($_SESSION['user_id']);
+        $files = (new File($this->db))->filesByUser($user);
 
         return new HtmlResponse(
             (new DefaultTemplate(
                 'Dashboard',
-                new DashboardView($user))
+                new DashboardView($user, $files))
             )->render()
         );
     }

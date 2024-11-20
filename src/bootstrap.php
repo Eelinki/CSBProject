@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Dashboard\RequestHandler\Api\Upload;
 use App\Dashboard\RequestHandler\Dashboard;
 use App\Error\PublicError;
 use App\FrontPage\RequestHandler\FrontPage;
@@ -44,6 +45,7 @@ $router->map('GET', '/dashboard', new Dashboard($db));
 $router->group('/api', function ($group) use ($db) {
     $group->map('POST', '/login', new LoginApi($db));
     $group->map('POST', '/register', new RegisterApi($db));
+    $group->map('POST', '/upload', new Upload($db));
 })->setStrategy(new JsonStrategy(new ResponseFactory()));
 
 try {

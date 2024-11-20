@@ -14,8 +14,8 @@ services:
     build:
       context: .
       dockerfile: ./php-fpm/Dockerfile
+    working_dir: /var/www/html
     volumes:
-      - ./:/var/www/html
       - ./php-fpm/docker-user.ini:/usr/local/etc/php/conf.d/docker-user.ini
     depends_on:
       - postgres
