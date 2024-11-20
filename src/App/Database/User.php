@@ -35,6 +35,30 @@ final readonly class User
     /**
      * @throws BadRequestException
      */
+    public function getUserById(int $id): UserModel
+    {
+        $q = $this->db->prepare("SELECT * FROM user_account WHERE id = :id");
+        $q->bindValue(':id', $id);
+        $q->execute();
+
+        if ($q->rowCount() === 0) {
+            throw new BadRequestException('User not found');
+        }
+
+        $row = $q->fetchObject();
+
+        return new UserModel(
+            (int)$row->id,
+            (string)$row->username,
+            (string)$row->password,
+            (boolean)$row->is_admin
+        );
+    }
+
+
+    /**
+     * @throws BadRequestException
+     */
     public function getUserByLogin(string $username, string $passwordHash): UserModel
     {
         $q = $this->db->query("SELECT * FROM user_account WHERE username = '" . $username . "' AND password = '" . $passwordHash . "'");

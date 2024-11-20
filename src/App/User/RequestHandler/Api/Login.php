@@ -30,6 +30,8 @@ final readonly class Login implements RequestHandlerInterface
         $repo = new User($this->db);
         $user = $repo->getUserByLogin($username, $hashedPassword);
 
+        $_SESSION['user_id'] = $user->id();
+
         return (new Response())->withHeader('Location', '/');
     }
 }

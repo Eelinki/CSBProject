@@ -33,7 +33,11 @@ final readonly class DefaultTemplate implements View
             <div class="main-nav">
                 <nav>
                     <a class="logo" href="/">Super secure hosting</a>
-                    <a href="#">asdf</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="/logout">Logout</a>
+                    <?php else: ?>
+                        <a href="/login">Login</a>
+                    <?php endif; ?>
                 </nav>
             </div>
             <?= $this->view->render() ?>
