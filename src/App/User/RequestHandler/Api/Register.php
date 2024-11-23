@@ -35,7 +35,9 @@ final readonly class Register implements RequestHandlerInterface
             throw new BadRequestException('Passwords do not match');
         }
 
-        $userId = $repo->createUser($username, $password);
+        $hashedPassword = md5($password);
+
+        $userId = $repo->createUser($username, $hashedPassword);
         $_SESSION['user_id'] = $userId;
 
         return (new Response())->withHeader('Location', '/');
