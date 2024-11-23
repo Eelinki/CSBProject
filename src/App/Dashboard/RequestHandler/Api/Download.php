@@ -5,6 +5,7 @@ namespace App\Dashboard\RequestHandler\Api;
 
 use App\Config;
 use App\Database\File;
+use App\Database\User;
 use Laminas\Diactoros\Response;
 use League\Route\Http\Exception\BadRequestException;
 use PDO;
@@ -23,10 +24,19 @@ final readonly class Download implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        if (!isset($_SESSION['user_id'])) {
+            throw new BadRequestException('You need to be logged in to download files');
+        }
+        $user = (new User($this->db))->getUserById($_SESSION['user_id']);
+
         $repo = new File($this->db);
 
         $fileId = (int)$request->getAttribute('id', '0');
         $file = $repo->fileById($fileId);
+
+        if ($file->userId() !== $user->id()) {
+            throw new BadRequestException('You are not allowed to download this file');
+        }
 
         $config = new Config();
         $filePath = $config->basePath() . '/uploads/' . $file->id();

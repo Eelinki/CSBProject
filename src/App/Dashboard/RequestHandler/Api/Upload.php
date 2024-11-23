@@ -43,7 +43,6 @@ final readonly class Upload implements RequestHandlerInterface
         $fileExt = match ($mime) {
             "image/jpg", "image/jpeg" => "jpg",
             "image/png" => "png",
-            "application/zip", "application/x-zip-compressed" => "zip",
             default => throw new BadRequestException("Unsupported file type")
         };
 

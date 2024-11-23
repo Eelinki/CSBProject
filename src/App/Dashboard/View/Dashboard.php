@@ -24,7 +24,7 @@ final readonly class Dashboard implements View
         <div class="page">
             <h1>Dashboard</h1>
             <div class="profile">
-                <h3>Hello, <?= $this->user->username() ?></h3>
+                <h3>Hello, <?= htmlspecialchars($this->user->username(), ENT_QUOTES | ENT_HTML5) ?></h3>
                 <p><?= $this->user->isAdmin() ? 'Admin' : 'Regular user' ?></p>
             </div>
             <h2>Upload a file</h2>
@@ -39,7 +39,7 @@ final readonly class Dashboard implements View
             <div class="file-list">
                 <?php foreach ($this->files as $file): ?>
                     <div class="file">
-                        <?= $file->filename() ?>
+                        <?= htmlspecialchars($file->filename(), ENT_QUOTES | ENT_HTML5) ?>
                         <div class="actions">
                             <a class="button" href="/api/download/<?= $file->id() ?>">Download</a>
                         </div>

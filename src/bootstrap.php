@@ -54,6 +54,8 @@ try {
     $response = $router->dispatch($request);
 } catch (NotFoundException|BadRequestException|MethodNotAllowedException $e) {
     $response = (new PublicError($e->getStatusCode(), $e->getMessage()))->handle($request);
+} catch (Exception) {
+    $response = (new PublicError(500, 'Server error!'))->handle($request);
 }
 
 (new Laminas\HttpHandlerRunner\Emitter\SapiEmitter)->emit($response);

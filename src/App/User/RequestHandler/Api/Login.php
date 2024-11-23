@@ -25,10 +25,12 @@ final readonly class Login implements RequestHandlerInterface
         $username = trim($request->getParsedBody()['username'] ?? '');
         $password = $request->getParsedBody()['password'] ?? '';
 
-        $hashedPassword = md5($password);
-
         $repo = new User($this->db);
-        $user = $repo->getUserByLogin($username, $hashedPassword);
+        $user = $repo->getUserByLogin($username);
+
+        if (!password_verify($password, $user->passwordHash())) {
+            throw new BadRequestException('Wrong password!');
+        }
 
         $_SESSION['user_id'] = $user->id();
 
