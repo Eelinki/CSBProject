@@ -8,7 +8,8 @@ final readonly class File
     public function __construct(
         private int $id,
         private int $userId,
-        private string $filename
+        private string $filename,
+        private string $extension
     ) {
     }
 
@@ -25,5 +26,10 @@ final readonly class File
     public function filename(): string
     {
         return $this->filename;
+    }
+
+    public function extension(): string
+    {
+        return $this->extension;
     }
 }

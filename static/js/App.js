@@ -23,6 +23,9 @@ export default class App {
                     if (res.redirected) {
                         return window.location.href = res.url;
                     }
+                    if (e.target.dataset.reload !== undefined) {
+                        window.location.reload();
+                    }
 
                     const json = await res.json();
 

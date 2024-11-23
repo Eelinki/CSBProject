@@ -14,11 +14,12 @@ final readonly class File
     {
     }
 
-    public function addFile(UserModel $user, string $filename): int
+    public function addFile(UserModel $user, string $filename, string $ext): int
     {
-        $q = $this->db->prepare('INSERT INTO file (user_id, filename) VALUES (:user_id, :filename)');
+        $q = $this->db->prepare('INSERT INTO file (user_id, filename, extension) VALUES (:user_id, :filename, :extension)');
         $q->bindValue(':user_id', $user->id(), PDO::PARAM_INT);
         $q->bindValue(':filename', $filename);
+        $q->bindValue(':extension', $ext);
         $q->execute();
 
         return (int)$this->db->lastInsertId();
@@ -40,6 +41,7 @@ final readonly class File
                 (int)$row->id,
                 (int)$row->user_id,
                 (string)$row->filename,
+                (string)$row->extension
             );
         }
 
@@ -56,7 +58,7 @@ final readonly class File
         $q->execute();
 
         if ($q->rowCount() === 0) {
-            throw new BadRequestException('Wrong username or password!');
+            throw new BadRequestException('File not found');
         }
 
         $row = $q->fetchObject();
@@ -65,6 +67,7 @@ final readonly class File
             (int)$row->id,
             (int)$row->user_id,
             (string)$row->filename,
+            (string)$row->extension
         );
     }
 }

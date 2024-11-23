@@ -34,27 +34,25 @@ final readonly class Upload implements RequestHandlerInterface
 
         /** @var UploadedFileInterface $file */
         $file = $request->getUploadedFiles()['file'];
-        if ($file->getError() !== 0) {
-            throw new BadRequestException("Error {$file->getError()}");
+        $tmpFile = $file->getStream()->getMetadata('uri');
+        if ($file->getError() !== 0 || !is_file($tmpFile)) {
+            throw new BadRequestException("Invalid file uploaded");
         }
+
+        $mime = mime_content_type($tmpFile);
+        $fileExt = match ($mime) {
+            "image/jpg", "image/jpeg" => "jpg",
+            "image/png" => "png",
+            "application/zip", "application/x-zip-compressed" => "zip",
+            default => throw new BadRequestException("Unsupported file type")
+        };
 
         $clientFilename = basename($file->getClientFilename() ?? 'file');
 
-        $fileId = $repo->addFile($user, $clientFilename);
-
-        $parts = explode('.', $clientFilename);
-        if (count($parts) < 2) {
-            throw new BadRequestException("File missing extension");
-        }
-        $fileType = array_pop($parts);
+        $fileId = $repo->addFile($user, $clientFilename, $fileExt);
 
         $config = new Config();
-
-        $targetPath = $config->basePath() . '/uploads/' . $fileId . '.' . $fileType;
-
-        if (!is_dir($config->basePath() . '/uploads')) {
-            mkdir($config->basePath() . '/uploads');
-        }
+        $targetPath = $config->basePath() . '/uploads/' . $fileId;
 
         $file->moveTo($targetPath);
 

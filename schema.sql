@@ -8,5 +8,6 @@ CREATE TABLE user_account (
 CREATE TABLE file (
     id serial PRIMARY KEY,
     user_id integer NOT NULL REFERENCES user_account (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    filename varchar(255) NOT NULL
-)
+    filename varchar(255) NOT NULL,
+    extension varchar(255) NOT NULL
+);

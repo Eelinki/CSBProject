@@ -8,6 +8,7 @@
     "ext-mbstring": "*",
     "ext-json": "*",
     "ext-pdo_pgsql": "*",
+    "ext-fileinfo": "*",
     "laminas/laminas-diactoros": "^3.5.0",
     "laminas/laminas-httphandlerrunner": "^2.11.0",
     "league/route": "^6.0.0"

@@ -178,3 +178,24 @@ button, input[type="button"], input[type="submit"], a.button {
         }
     }
 }
+
+.file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .file {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #222222;
+        border: 1px solid #333333;
+        padding: 16px;
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            font-size: 14px;
+        }
+    }
+}
