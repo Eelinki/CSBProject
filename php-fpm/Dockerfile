@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y libpq-dev \
 	&& docker-php-ext-install -j$(nproc) pdo pdo_pgsql \
 	&& docker-php-ext-enable xdebug
 
-RUN chown www-data:www-data /var/www/html
+RUN mkdir /var/www/html/uploads
+RUN chown -R www-data:www-data /var/www/html
 USER www-data:www-data
 EXPOSE 9000
 CMD ["php-fpm"]
